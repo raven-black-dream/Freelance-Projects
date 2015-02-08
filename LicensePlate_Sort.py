@@ -1,6 +1,6 @@
 __author__ = 'Evan Harley'
 
-# License Plate Sorting Script for Robbins Parking
+# License Plate Sorting Script
 import xlrd
 from datetime import date, datetime as dt
 from collections import Counter
@@ -11,8 +11,7 @@ import os
 
 def process_lp_spreadsheet():
     current_date = date.today()
-#   file_path = os.path.normpath('C:/Users/Evan/My Documents/Robbins - License Place Sort/')
-    file_path = os.path.normpath("C:/users/patroller1/desktop/airport/Mo's ReportsData/")
+    file_path = os.path.normpath("file path goes here")
     file_name = "\Airport_" + str(current_date.year) + ".xlsx"
     filename = file_path + file_name
     workbook = xlrd.open_workbook(filename)
