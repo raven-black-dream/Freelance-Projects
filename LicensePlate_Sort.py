@@ -12,7 +12,7 @@ import os
 def process_lp_spreadsheet():
     current_date = date.today()
     file_path = os.path.normpath("file path goes here")
-    file_name = "\Airport_" + str(current_date.year) + ".xlsx"
+    file_name = # file name goes here.
     filename = file_path + file_name
     workbook = xlrd.open_workbook(filename)
     sheet_names = workbook.sheet_names()
