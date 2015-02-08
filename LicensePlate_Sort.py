@@ -154,5 +154,8 @@ def lp_write(data, dates, path, name):
                         f.write(data['not_present_in_{0}'.format(index)][i] + " | ")
 
     f.close()
+    
+    
+if __name__ == __main__:
 
-process_lp_spreadsheet()
+    process_lp_spreadsheet()
