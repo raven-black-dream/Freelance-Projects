@@ -156,6 +156,6 @@ def lp_write(data, dates, path, name):
     f.close()
     
     
-if __name__ == __main__:
+if __name__ == "__main__":
 
     process_lp_spreadsheet()
