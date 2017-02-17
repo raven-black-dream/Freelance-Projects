@@ -1,0 +1,520 @@
+---
+title: "Client Incident Reports: Jan 2016 - June 2016"
+author: "Evan Harley"
+date: "7 August 2016"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+  word_document: default
+header-includes:
+    - \usepackage{fancyhdr}
+    - \usepackage{graphicx}
+mainfont: Calibri
+---
+\pagestyle{fancyplain}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=\textwidth,height=1.0cm]{logo1.png}}
+\fancyhead[CR]{\includegraphics[width=\textwidth,height=1.0cm]{logo2.png}}
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(scales)
+library(knitr)
+
+setwd('C:/Users/Evan/PycharmProjects/Paladin_Analysis')
+data <- read.csv("Thrifty Foods_1_half_2016.csv")
+
+data$inc_date <- paste(data$Date, data$Month, data$Year, sep= '/')
+
+data$inc_date <- as.Date(data$inc_date, format = "%d/%B/%Y")
+data$Day.of.Week <- weekdays(data$inc_date)
+
+```
+
+#Introduction
+
+This report is an Analysis of Paladin Security's incident report data for the Client chain of sites, from January to June 2016. The intent of the analysis is to highlight any trends that might be found in the data, in hopes of increasing the quality of the service we offer. This includes any potential issues, and areas of concern that may exist. 
+
+This is a rather small data set, having 268 observations. The data set is also skewed heavily, in that one Site, J, makes up 35.44% of the total observations. In this report I have presented each Site's report data separately, to mitigate this skew as much as possible.
+
+The first section of the report consists of general statistics. The plots in this section will have the data for J removed to mitigate the skew that it causes. The second section contains plots which explore show each Site's data separate from the rest of the data. 
+
+As data analysis is a question driven process, any questions that you have which are not answered in the report likely can be, feel free to forward any requests for more detail or analysis to me. 
+\newpage
+
+#General Statistics
+
+##Statistical Values
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+
+cat(paste("Total number of Incidents Reported: ", nrow(data)))
+```
+\newline
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+cat(paste("Average Number of Incidents Reported per month: ", (nrow(data)/6)))
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+Site_data <- tally(group_by(data, Site), sort = T)
+Site_data$percentage <- (Site_data$n/nrow(data)) * 100
+Site_data$average_per_month <- (Site_data$n/6)
+table = kable(Site_data, caption="Report Data broken by Site")
+cat(table, sep = '\n')
+rm(Site_data)
+rm(table)
+```
+
+##General Plots
+
+The following plots have had the data for J removed to minimize the skew in the data caused by it being the Site generating the most reports.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=3.5, fig.height=3.5}
+gen_data <- data[data$Site != "J", ]
+
+gen_month <- tally(group_by(gen_data, Month), sort = T)
+gen_month$percentage <- (gen_month$n/nrow(gen_data))*100
+avg_month <- mean(gen_month$percentage)
+sd_month <- sd(gen_month$percentage)
+
+ggplot(aes(x = Month, y = percentage), data = gen_month)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("January","February","March", "April","May", "June", "July", "August", "September", "October", "November", "December"))+
+  geom_hline(yintercept= avg_month, colour= "blue") +
+  geom_hline(yintercept= avg_month + sd_month, colour = "darkred") +
+  geom_hline(yintercept= avg_month - sd_month, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Month")
+rm(gen_month)
+rm(avg_month)
+rm(sd_month)
+
+gen_dow <- tally(group_by(gen_data, Day.of.Week), sort = T)
+gen_dow$percentage <- (gen_dow$n/nrow(gen_data))*100
+avg_dow <- mean(gen_dow$percentage)
+sd_dow <- sd(gen_dow$percentage)
+
+ggplot(aes(x = Day.of.Week, y = percentage), data = gen_dow)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  geom_hline(yintercept= avg_dow, colour= "blue") +
+  geom_hline(yintercept= avg_dow + sd_dow, colour = "darkred") +
+  geom_hline(yintercept= avg_dow - sd_dow, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Day of the Week")
+rm(gen_dow)
+rm(sd_dow)
+rm(avg_dow)
+```
+\newpage
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3.5, fig.width=3.5}
+gen_hour <- tally(group_by(gen_data, Hour), sort = T)
+gen_hour$percentage <- (gen_hour$n/nrow(gen_data))*100
+avg_hour <- mean(gen_hour$percentage)
+sd_hour <- sd(gen_hour$percentage)
+
+ggplot(aes(x=Hour, y=percentage), data = transform(gen_hour,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6,7))))+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete() +
+  geom_hline(yintercept= avg_hour, colour= "blue") +
+  geom_hline(yintercept= avg_hour + sd_hour, colour = "darkred") +
+  geom_hline(yintercept= avg_hour - sd_hour, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Hour of Shift")
+
+rm(avg_hour)
+rm(sd_hour)
+rm(gen_hour)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+gen_type <- tally(group_by(gen_data, Type.of.Incident), sort = T)
+gen_type$percentage <- (gen_type$n/nrow(gen_data))*100
+gen_type <- head(gen_type, 10)
+avg_type <- mean(gen_type$percentage)
+sd_type <- sd(gen_type$percentage)
+
+ggplot(aes(x = Type.of.Incident, y = percentage), data = gen_type)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  geom_hline(yintercept= avg_type, colour= "blue") +
+  geom_hline(yintercept= avg_type + sd_type, colour = "red") +
+  geom_hline(yintercept= avg_type + (2 * sd_type), colour = "darkred") +
+  geom_hline(yintercept= avg_type - sd_type, colour = "red") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Type")
+```
+
+#Site Specific Plots
+
+##J
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=3.5, fig.height=3.5}
+gen_data <- data[data$Site == "J", ]
+
+gen_month <- tally(group_by(gen_data, Month), sort = T)
+gen_month$percentage <- (gen_month$n/nrow(gen_data))*100
+avg_month <- mean(gen_month$percentage)
+sd_month <- sd(gen_month$percentage)
+
+ggplot(aes(x = Month, y = percentage), data = gen_month)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("January","February","March", "April","May", "June", "July", "August", "September", "October", "November", "December"))+
+  geom_hline(yintercept= avg_month, colour= "blue") +
+  geom_hline(yintercept= avg_month + sd_month, colour = "darkred") +
+  geom_hline(yintercept= avg_month - sd_month, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Month")
+rm(gen_month)
+rm(avg_month)
+rm(sd_month)
+
+gen_dow <- tally(group_by(gen_data, Day.of.Week), sort = T)
+gen_dow$percentage <- (gen_dow$n/nrow(gen_data))*100
+avg_dow <- mean(gen_dow$percentage)
+sd_dow <- sd(gen_dow$percentage)
+
+ggplot(aes(x = Day.of.Week, y = percentage), data = gen_dow)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  geom_hline(yintercept= avg_dow, colour= "blue") +
+  geom_hline(yintercept= avg_dow + sd_dow, colour = "darkred") +
+  geom_hline(yintercept= avg_dow - sd_dow, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Day of the Week")
+rm(gen_dow)
+rm(sd_dow)
+rm(avg_dow)
+
+gen_hour <- tally(group_by(gen_data, Hour), sort = T)
+gen_hour$percentage <- (gen_hour$n/nrow(gen_data))*100
+avg_hour <- mean(gen_hour$percentage)
+sd_hour <- sd(gen_hour$percentage)
+
+ggplot(aes(x=Hour, y=percentage), data = transform(gen_hour,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6,7))))+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete() +
+  geom_hline(yintercept= avg_hour, colour= "blue") +
+  geom_hline(yintercept= avg_hour + sd_hour, colour = "darkred") +
+  geom_hline(yintercept= avg_hour - sd_hour, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Hour of Shift")
+
+rm(avg_hour)
+rm(sd_hour)
+rm(gen_hour)
+
+gen_type <- tally(group_by(gen_data, Type.of.Incident), sort = T)
+gen_type$percentage <- (gen_type$n/nrow(gen_data))*100
+gen_type <- head(gen_type, 10)
+avg_type <- mean(gen_type$percentage)
+sd_type <- sd(gen_type$percentage)
+
+ggplot(aes(x = Type.of.Incident, y = percentage), data = gen_type)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  geom_hline(yintercept= avg_type, colour= "blue") +
+  geom_hline(yintercept= avg_type + sd_type, colour = "red") +
+  geom_hline(yintercept= avg_type + (2 * sd_type), colour = "darkred") +
+  geom_hline(yintercept= avg_type - sd_type, colour = "red") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Type")
+```
+
+##T
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=3.5, fig.height=3.5}
+gen_data <- data[data$Site == "T", ]
+
+gen_month <- tally(group_by(gen_data, Month), sort = T)
+gen_month$percentage <- (gen_month$n/nrow(gen_data))*100
+avg_month <- mean(gen_month$percentage)
+sd_month <- sd(gen_month$percentage)
+
+ggplot(aes(x = Month, y = percentage), data = gen_month)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("January","February","March", "April","May", "June", "July", "August", "September", "October", "November", "December"))+
+  geom_hline(yintercept= avg_month, colour= "blue") +
+  geom_hline(yintercept= avg_month + sd_month, colour = "darkred") +
+  geom_hline(yintercept= avg_month - sd_month, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Month")
+rm(gen_month)
+rm(avg_month)
+rm(sd_month)
+
+gen_dow <- tally(group_by(gen_data, Day.of.Week), sort = T)
+gen_dow$percentage <- (gen_dow$n/nrow(gen_data))*100
+avg_dow <- mean(gen_dow$percentage)
+sd_dow <- sd(gen_dow$percentage)
+
+ggplot(aes(x = Day.of.Week, y = percentage), data = gen_dow)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  geom_hline(yintercept= avg_dow, colour= "blue") +
+  geom_hline(yintercept= avg_dow + sd_dow, colour = "darkred") +
+  geom_hline(yintercept= avg_dow - sd_dow, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Day of the Week")
+rm(gen_dow)
+rm(sd_dow)
+rm(avg_dow)
+
+gen_hour <- tally(group_by(gen_data, Hour), sort = T)
+gen_hour$percentage <- (gen_hour$n/nrow(gen_data))*100
+avg_hour <- mean(gen_hour$percentage)
+sd_hour <- sd(gen_hour$percentage)
+
+ggplot(aes(x=Hour, y=percentage), data = transform(gen_hour,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6,7))))+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete() +
+  geom_hline(yintercept= avg_hour, colour= "blue") +
+  geom_hline(yintercept= avg_hour + sd_hour, colour = "darkred") +
+  geom_hline(yintercept= avg_hour - sd_hour, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Hour of Shift")
+
+rm(avg_hour)
+rm(sd_hour)
+rm(gen_hour)
+
+gen_type <- tally(group_by(gen_data, Type.of.Incident), sort = T)
+gen_type$percentage <- (gen_type$n/nrow(gen_data))*100
+gen_type <- head(gen_type, 10)
+avg_type <- mean(gen_type$percentage)
+sd_type <- sd(gen_type$percentage)
+
+ggplot(aes(x = Type.of.Incident, y = percentage), data = gen_type)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  geom_hline(yintercept= avg_type, colour= "blue") +
+  geom_hline(yintercept= avg_type + sd_type, colour = "red") +
+  geom_hline(yintercept= avg_type + (2 * sd_type), colour = "darkred") +
+  geom_hline(yintercept= avg_type - sd_type, colour = "red") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Type")
+```
+
+##CW
+``````{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=3.5, fig.height=3.5}
+gen_data <- data[data$Site == "CW", ]
+
+gen_month <- tally(group_by(gen_data, Month), sort = T)
+gen_month$percentage <- (gen_month$n/nrow(gen_data))*100
+avg_month <- mean(gen_month$percentage)
+sd_month <- sd(gen_month$percentage)
+
+ggplot(aes(x = Month, y = percentage), data = gen_month)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("January","February","March", "April","May", "June", "July", "August", "September", "October", "November", "December"))+
+  geom_hline(yintercept= avg_month, colour= "blue") +
+  geom_hline(yintercept= avg_month + sd_month, colour = "darkred") +
+  geom_hline(yintercept= avg_month - sd_month, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Month")
+rm(gen_month)
+rm(avg_month)
+rm(sd_month)
+
+gen_dow <- tally(group_by(gen_data, Day.of.Week), sort = T)
+gen_dow$percentage <- (gen_dow$n/nrow(gen_data))*100
+avg_dow <- mean(gen_dow$percentage)
+sd_dow <- sd(gen_dow$percentage)
+
+ggplot(aes(x = Day.of.Week, y = percentage), data = gen_dow)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  geom_hline(yintercept= avg_dow, colour= "blue") +
+  geom_hline(yintercept= avg_dow + sd_dow, colour = "darkred") +
+  geom_hline(yintercept= avg_dow - sd_dow, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Day of the Week")
+rm(gen_dow)
+rm(sd_dow)
+rm(avg_dow)
+
+gen_hour <- tally(group_by(gen_data, Hour), sort = T)
+gen_hour$percentage <- (gen_hour$n/nrow(gen_data))*100
+avg_hour <- mean(gen_hour$percentage)
+sd_hour <- sd(gen_hour$percentage)
+
+ggplot(aes(x=Hour, y=percentage), data = transform(gen_hour,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6,7))))+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete() +
+  geom_hline(yintercept= avg_hour, colour= "blue") +
+  geom_hline(yintercept= avg_hour + sd_hour, colour = "darkred") +
+  geom_hline(yintercept= avg_hour - sd_hour, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Hour of Shift")
+
+rm(avg_hour)
+rm(sd_hour)
+rm(gen_hour)
+
+gen_type <- tally(group_by(gen_data, Type.of.Incident), sort = T)
+gen_type$percentage <- (gen_type$n/nrow(gen_data))*100
+gen_type <- head(gen_type, 10)
+avg_type <- mean(gen_type$percentage)
+sd_type <- sd(gen_type$percentage)
+
+ggplot(aes(x = Type.of.Incident, y = percentage), data = gen_type)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  geom_hline(yintercept= avg_type, colour= "blue") +
+  geom_hline(yintercept= avg_type + sd_type, colour = "red") +
+  geom_hline(yintercept= avg_type + (2 * sd_type), colour = "darkred") +
+  geom_hline(yintercept= avg_type - sd_type, colour = "red") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Type")
+```
+
+##CD
+
+``````{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=3.5, fig.height=3.5}
+gen_data <- data[data$Site == "CD", ]
+
+gen_month <- tally(group_by(gen_data, Month), sort = T)
+gen_month$percentage <- (gen_month$n/nrow(gen_data))*100
+avg_month <- mean(gen_month$percentage)
+sd_month <- sd(gen_month$percentage)
+
+ggplot(aes(x = Month, y = percentage), data = gen_month)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("January","February","March", "April","May", "June", "July", "August", "September", "October", "November", "December"))+
+  geom_hline(yintercept= avg_month, colour= "blue") +
+  geom_hline(yintercept= avg_month + sd_month, colour = "darkred") +
+  geom_hline(yintercept= avg_month - sd_month, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Month")
+rm(gen_month)
+rm(avg_month)
+rm(sd_month)
+
+gen_dow <- tally(group_by(gen_data, Day.of.Week), sort = T)
+gen_dow$percentage <- (gen_dow$n/nrow(gen_data))*100
+avg_dow <- mean(gen_dow$percentage)
+sd_dow <- sd(gen_dow$percentage)
+
+ggplot(aes(x = Day.of.Week, y = percentage), data = gen_dow)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  geom_hline(yintercept= avg_dow, colour= "blue") +
+  geom_hline(yintercept= avg_dow + sd_dow, colour = "darkred") +
+  geom_hline(yintercept= avg_dow - sd_dow, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Day of the Week")
+rm(gen_dow)
+rm(sd_dow)
+rm(avg_dow)
+
+gen_hour <- tally(group_by(gen_data, Hour), sort = T)
+gen_hour$percentage <- (gen_hour$n/nrow(gen_data))*100
+avg_hour <- mean(gen_hour$percentage)
+sd_hour <- sd(gen_hour$percentage)
+
+ggplot(aes(x=Hour, y=percentage), data = transform(gen_hour,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6,7))))+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete() +
+  geom_hline(yintercept= avg_hour, colour= "blue") +
+  geom_hline(yintercept= avg_hour + sd_hour, colour = "darkred") +
+  geom_hline(yintercept= avg_hour - sd_hour, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Hour of Shift")
+
+rm(avg_hour)
+rm(sd_hour)
+rm(gen_hour)
+
+gen_type <- tally(group_by(gen_data, Type.of.Incident), sort = T)
+gen_type$percentage <- (gen_type$n/nrow(gen_data))*100
+gen_type <- head(gen_type, 10)
+avg_type <- mean(gen_type$percentage)
+sd_type <- sd(gen_type$percentage)
+
+ggplot(aes(x = Type.of.Incident, y = percentage), data = gen_type)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  geom_hline(yintercept= avg_type, colour= "blue") +
+  geom_hline(yintercept= avg_type + sd_type, colour = "red") +
+  geom_hline(yintercept= avg_type + (2 * sd_type), colour = "darkred") +
+  geom_hline(yintercept= avg_type - sd_type, colour = "red") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Type")
+```
+
+##B
+
+`````````{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=3.5, fig.height=3.5}
+gen_data <- data[data$Site == "B", ]
+
+gen_month <- tally(group_by(gen_data, Month), sort = T)
+gen_month$percentage <- (gen_month$n/nrow(gen_data))*100
+avg_month <- mean(gen_month$percentage)
+sd_month <- sd(gen_month$percentage)
+
+ggplot(aes(x = Month, y = percentage), data = gen_month)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("January","February","March", "April","May", "June", "July", "August", "September", "October", "November", "December"))+
+  geom_hline(yintercept= avg_month, colour= "blue") +
+  geom_hline(yintercept= avg_month + sd_month, colour = "darkred") +
+  geom_hline(yintercept= avg_month - sd_month, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Month")
+rm(gen_month)
+rm(avg_month)
+rm(sd_month)
+
+gen_dow <- tally(group_by(gen_data, Day.of.Week), sort = T)
+gen_dow$percentage <- (gen_dow$n/nrow(gen_data))*100
+avg_dow <- mean(gen_dow$percentage)
+sd_dow <- sd(gen_dow$percentage)
+
+ggplot(aes(x = Day.of.Week, y = percentage), data = gen_dow)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  geom_hline(yintercept= avg_dow, colour= "blue") +
+  geom_hline(yintercept= avg_dow + sd_dow, colour = "darkred") +
+  geom_hline(yintercept= avg_dow - sd_dow, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Day of the Week")
+rm(gen_dow)
+rm(sd_dow)
+rm(avg_dow)
+
+gen_hour <- tally(group_by(gen_data, Hour), sort = T)
+gen_hour$percentage <- (gen_hour$n/nrow(gen_data))*100
+avg_hour <- mean(gen_hour$percentage)
+sd_hour <- sd(gen_hour$percentage)
+
+ggplot(aes(x=Hour, y=percentage), data = transform(gen_hour,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6,7))))+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  scale_x_discrete() +
+  geom_hline(yintercept= avg_hour, colour= "blue") +
+  geom_hline(yintercept= avg_hour + sd_hour, colour = "darkred") +
+  geom_hline(yintercept= avg_hour - sd_hour, colour = "darkred") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Hour of Shift")
+
+rm(avg_hour)
+rm(sd_hour)
+rm(gen_hour)
+
+gen_type <- tally(group_by(gen_data, Type.of.Incident), sort = T)
+gen_type$percentage <- (gen_type$n/nrow(gen_data))*100
+gen_type <- head(gen_type, 10)
+avg_type <- mean(gen_type$percentage)
+sd_type <- sd(gen_type$percentage)
+
+ggplot(aes(x = Type.of.Incident, y = percentage), data = gen_type)+
+  geom_bar(stat = "identity", fill = 'steelblue')+
+  geom_hline(yintercept= avg_type, colour= "blue") +
+  geom_hline(yintercept= avg_type + sd_type, colour = "red") +
+  geom_hline(yintercept= avg_type + (2 * sd_type), colour = "darkred") +
+  geom_hline(yintercept= avg_type - sd_type, colour = "red") +
+  theme(axis.text.x = element_text(angle=45))+
+  ggtitle("Percent of Incidents by Type")
+```

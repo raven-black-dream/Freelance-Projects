@@ -1,0 +1,327 @@
+---
+title: "Client Incident Reports: Jan 2015 - June 2016"
+author: "Evan Harley"
+date: "2 August 2016"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+  word_document: default
+header-includes:
+    - \usepackage{fancyhdr}
+    - \usepackage{graphicx}
+mainfont: Calibri
+---
+\pagestyle{fancyplain}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=\textwidth,height=1.0cm]{logo1.png}}
+\fancyhead[CR]{\includegraphics[width=\textwidth,height=1.0cm]{logo2.png}}
+---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(scales)
+
+setwd('C:/Users/Evan/PycharmProjects/Paladin_Analysis')
+data <- read.csv("Thrifty_Data.csv")
+
+data$inc_date <- paste(data$Date, data$Month, data$Year, sep= '/')
+data$Month <- paste("1", data$Month, "2015", sep = '/')
+data$inc_date <- as.Date(data$inc_date, format = "%d/%B/%Y")
+data$Day.of.Week <- weekdays(data$inc_date)
+```
+
+# Introduction
+
+This report is an Analysis of Paladin Security's incident report data for the Thrify Foods chain of sites, from 2015 through June 2016. The intent of the analysis is to highlight any trends that might be found in the data, in hopes of increasing the quality of the service we offer. This includes any potential issues, and areas of concern that may exist. 
+
+This is a rather small data set, having 981 observations. The data set is also skewed heavily, in that one Site, J, makes up 47.8% of the total observations. Where possible steps have been taken to mitigate the effect this skew has on the visualizations that follow. 
+
+The first section of the report consists of general statistics, and should give a solid overview of what useful information was found in the data. The second section contains plots which expand on the plots found in the first section, adding dimension, or detail in order to find some deeper trend, or conclusion. 
+
+As data analysis is a question driven process, any questions that you have which are not answered in the report likely can be, feel free to forward any requests for more detail or analysis to me. 
+
+# General Analyses
+## Incidents by Month
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+exp <- group_by(data, Year, Month, Site)
+exp <- tally(exp)
+exp$percentage <- (exp$n / sum(exp$n))
+exp$Month <- as.Date(exp$Month, format="%d/%B/%Y")
+exp$Year <- factor(exp$Year, labels = c("2015", "2016"))
+exp1 <- exp[exp$Year == 2016, ]
+exp2 <- exp[exp$Year == 2015, ]
+
+ggplot()+
+  geom_line(aes(x=Month, y=n, colour = Year), data = exp)+
+  xlab("Months")+
+  ylab("Number of incident reports")+
+  scale_x_date(breaks= date_breaks("months"), labels = date_format("%B"))+
+  theme(axis.text.x = element_text(angle=90, size=7))+
+  scale_colour_brewer(type = "qual", palette = "Dark2")+
+  facet_wrap(~Site)
+
+  ```
+
+In the above plot which plots number of incident reports across the months of the year 2015 and the first half of 2016, broken across the Sites we cover, one can see that each Site has a peak between late spring and early fall. There is a Site which deviates from this trend, namely T. The peak at T is fairly clearly centred around the month of March.
+
+## Incidents by Day of the Week
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+exp <- tally(group_by(data, Site, Day.of.Week), sort = T)
+exp <- exp[which(exp$Site != "J"), ]
+exp$percentage <- (exp$n/sum(exp$n))*100
+
+
+ggplot(aes(x = Day.of.Week, y = n), data = exp)+
+  geom_bar(stat = "identity", aes(fill = Site))+
+  ggtitle("Incident reports by Day of the Week broken by Site")+
+  xlab("Day of the Week")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  theme(axis.text.x = element_text(angle=45))+
+  scale_fill_brewer(type = "qual", palette = "Dark2")+
+  facet_wrap(~Site)
+
+```
+
+This plot shows clearly which days are most likely to generate incident reports, broken across the various sites. J has been removed from the plot and will be plotted separately as it is the outlier, and the plot more difficult to interpret with J included. Further Analysis showed that T's skew towards the beginning of the week is related to under-reporting on the part of the guard(s) that work the latter half of the week.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+exp <- tally(group_by(data, Site, Day.of.Week), sort = T)
+exp <- exp[which(exp$Site == "J"), ]
+exp$percentage <- (exp$n/sum(exp$n))*100
+
+
+ggplot(aes(x = Day.of.Week, y = n), data = exp)+
+  geom_bar(stat = "identity", aes(fill = Site))+
+  ggtitle("Incident reports by Day of the Week broken by Site")+
+  xlab("Day of the Week")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete(lim = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))+
+  theme(axis.text.x = element_text(angle=45))+
+  scale_fill_brewer(type = "qual", palette = "Dark2")
+
+```
+
+It is easy in the above plot to see how J's numbers would skew the axes on the other plots making it more difficult to interpret the information. J is the most active site, but it is clear that Wednesday and Saturday are significantly more active than the other days.
+
+## Incidents by Hour of Day
+The following plots will show the breakdown of when during a shift there are incidents being reported.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+exp <- tally(group_by(data, Site, Hour), sort = T)
+exp <- exp[which(exp$Site != "J"), ]
+
+ggplot(aes(x=Hour, y=n), data = transform(exp,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6,7))))+
+  geom_bar(stat = "identity", aes(fill = Site))+
+  ggtitle("Incident reports by Day of the Week broken by Site")+
+  xlab("Hour")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Dark2")+
+  facet_wrap(~Site)
+
+```
+
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+exp <- tally(group_by(data, Site, Hour), sort = T)
+exp <- exp[which(exp$Site == "J"), ]
+
+ggplot(aes(x=Hour, y=n), data = transform(exp,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6))))+
+  geom_bar(stat = "identity", aes(fill = Site))+
+  ggtitle("Incident reports by Day of the Week broken by Site")+
+  xlab("Hour")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Dark2")+
+  facet_wrap(~Site)
+
+```
+
+These two plots show the start of shift to end of shift trend in incident reporting. Each of the sites shows a linear decrease across the duration of the shift. Whether this is due to on site traffic, or not would require more data to discern.
+
+## Incidents by Incident Type
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+types <- tally(group_by(data[which(data$Site != "J"),], Type.of.Incident), sort = T)
+types <- head(types, 10)
+types <- types$Type.of.Incident
+exp <- tally(group_by(data[which(data$Type.of.Incident %in% types), ], Site, Type.of.Incident), sort = T)
+exp <- exp[which(exp$Site != "J"), ]
+
+ggplot(aes(x=Type.of.Incident, y=n), data = exp)+
+  geom_bar(stat = "identity", aes(fill = Site))+
+  ggtitle("Incident reports by Report Type broken by Site")+
+  xlab("Type of Incident Report")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Dark2")+
+  theme(axis.text.x = element_text(angle=90, size=7))+
+  facet_wrap(~Site)
+
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+types <- tally(group_by(data[which(data$Site == "J"),], Type.of.Incident), sort = T)
+types <- head(types, 10)
+types <- types$Type.of.Incident
+exp <- tally(group_by(data[which(data$Type.of.Incident %in% types), ], Site, Type.of.Incident), sort = T)
+exp <- exp[which(exp$Site == "J"), ]
+
+ggplot(aes(x=Type.of.Incident, y=n), data = exp)+
+  geom_bar(stat = "identity", aes(fill = Site))+
+  ggtitle("Incident reports by Report Type broken by Site")+
+  xlab("Type of Incident Report")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Dark2")+
+  theme(axis.text.x = element_text(angle=90, size=7))+
+  facet_wrap(~Site)
+
+```
+
+The above plots show the 10 most common types of incident reports. Each Site has its own distribution of these most common types, and should give an idea of where the issues are.
+
+
+# Multivariate Analysis 
+
+## Incidents by Month broken by Incident Type
+```{r, echo=FALSE,message=FALSE,warning=FALSE, fig.height=3.5 , fig.width=7}
+types <- tally(group_by(data[which(data$Site != "J"),], Type.of.Incident), sort = T)
+types <- head(types, 10)
+types <- types$Type.of.Incident
+exp <- tally(group_by(data[which(data$Type.of.Incident %in% types & data$Site != "J"), ], Month, Type.of.Incident), sort = T)
+exp$Month <- as.Date(exp$Month, format="%d/%B/%Y")
+
+ggplot(aes(x=Month, y=n), data = exp)+
+  geom_step(aes(colour = Type.of.Incident))+
+  ggtitle("Incident by Month broken by Incident Type")+
+  xlab("Month")+
+  ylab("Count of Incident Reports")+
+  scale_x_date(breaks= date_breaks("months"), labels = date_format("%B"))+
+  scale_y_continuous()+
+  theme(axis.text.x = element_text(angle=90, size = 7))+
+  scale_colour_brewer(type = "qual", palette = "Paired")+
+  facet_wrap(~Type.of.Incident)
+
+
+```
+
+Again the above plot shows only the 10 most common incident types. It is clear that the trend which shows on the plot of incidents per month carries true here as well. Most incident types show a spike in the Summer months. 
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE, fig.height=3.5 , fig.width=7}
+types <- tally(group_by(data[which(data$Site == "J"),], Type.of.Incident), sort = T)
+types <- head(types, 10)
+types <- types$Type.of.Incident
+exp <- tally(group_by(data[which(data$Type.of.Incident %in% types & data$Site == "J"), ], Month, Type.of.Incident), sort = T)
+exp$Month <- as.Date(exp$Month, format="%d/%B/%Y")
+
+ggplot(aes(x=Month, y=n), data = exp)+
+  geom_step(aes(colour = Type.of.Incident))+
+  ggtitle("Incident by Month broken by Incident Type")+
+  xlab("Month")+
+  ylab("Count of Incident Reports")+
+  scale_x_date(breaks= date_breaks("months"), labels = date_format("%B"))+
+  scale_y_continuous()+
+  theme(axis.text.x = element_text(angle=90, size = 7))+
+  scale_colour_brewer(type = "qual", palette = "Paired")+
+  facet_wrap(~Type.of.Incident)
+
+```
+
+The plot including the J incidents follows the same pattern, with a bit of a broader spread on the time of year where things are more active. 
+
+##Incidents By Hour broken by IR Type
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE, fig.height=3.5 , fig.width=7}
+types <- tally(group_by(data[which(data$Site != "J"),], Type.of.Incident), sort = T)
+types <- head(types, 10)
+types <- types$Type.of.Incident
+exp <- tally(group_by(data[which(data$Type.of.Incident %in% types & data$Site != "J"), ], Hour, Type.of.Incident), sort = T)
+
+ggplot(aes(x=Hour, y=n), data = transform(exp,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6))))+
+  geom_bar(stat = "identity", aes(fill = Type.of.Incident))+
+  ggtitle("Incident reports by Hour broken by Incident Type")+
+  xlab("Hour")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Paired")+
+  theme(axis.text.x = element_text(angle=90, size=7))+
+  facet_wrap(~Type.of.Incident)
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE, fig.height=3.5 , fig.width=7}
+types <- tally(group_by(data[which(data$Site == "J"),], Type.of.Incident), sort = T)
+types <- head(types, 10)
+types <- types$Type.of.Incident
+exp <- tally(group_by(data[which(data$Type.of.Incident %in% types & data$Site == "J"), ], Hour, Type.of.Incident), sort = T)
+
+ggplot(aes(x=Hour, y=n), data = transform(exp,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6))))+
+  geom_bar(stat = "identity", aes(fill = Type.of.Incident))+
+  ggtitle("Incident reports by Hour broken by Incident Type")+
+  xlab("Hour")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Paired")+
+  theme(axis.text.x = element_text(angle=90, size=7))+
+  facet_wrap(~Type.of.Incident)
+```
+
+Overall it is clear from the plot above that the pattern of the beginning of the shift being the point which is more active holds true even when the data is broken across incident types. There are a few exceptions, Prevention of theft seems to have a relatively flat distribution, and Suspicious persons seems to continue into the shift as well. These trends carry on to the J Site as well.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+exp <- tally(group_by(data[which(data$Site != "J"),], Month, Hour), sort = T)
+
+ggplot(aes(x=Hour, y=n), data = transform(exp,
+                                Hour = factor(Hour,                                                   levels = c(21,22,23,0,1,2,3,4,5,6))))+
+  geom_bar(stat = "identity", aes(fill = Month))+
+  ggtitle("Incident reports by Hour broken by Month")+
+  xlab("Hour")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Set3")+
+  theme(axis.text.x = element_text(size=7))+
+  facet_wrap(~Month)
+
+```
+
+It is interesting to note that while there is not much variance in the trend across months there is some. 
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE,fig.height=3.5,fig.width=7}
+exp <- tally(group_by(data[which(data$Site == "J"),], Month, Hour), sort = T)
+exp <- transform(exp, Month = factor(Month, levels= c("1/January/2015","1/February/2015",
+                                                      "1/March/2015", "1/April/2015",
+                                                      "1/May/2015", "1/June/2015",
+                                                      "1/July/2015","1/August/2015",
+                                                      "1/September/2015","1/October/2015",
+                                                      "1/November/2015",
+                                                      "1/December/2015")))
+
+ggplot(aes(x=Hour, y=n), data = transform(exp,
+                                Hour = factor(Hour,levels = c(21,22,23,0,1,2,3,4,5,6))))+
+  geom_bar(stat = "identity", aes(fill = Month))+
+  ggtitle("Incident reports by Hour broken by Month")+
+  xlab("Hour")+
+  ylab("Count of Incident Reports")+
+  scale_x_discrete()+
+  scale_fill_brewer(type = "qual", palette = "Set3")+
+  theme(axis.text.x = element_text(size=7))+
+  facet_wrap(~Month)
+
+```
+
+The distribution variance shown in this plot is very interesting. The variance does hold to the previous trend showing an increase in activity through the summer months. 
+
+
+#Conclusion
+
+This has been a detailed look at Paladin Security's Incident Report data for the Client series of sites. Each Site has its own unique finger print that marks the activity in the Site. I have tried to visualize the differences in the sites, and show their areas of concern. 
+
+A caveat regarding the trends found in this report, is that the data set only covers 1.5 years worth of data. This is not really enough data to derrive a predictive model from, but it should give an idea of the service Paladin Security offers. 
+
+Thank you.

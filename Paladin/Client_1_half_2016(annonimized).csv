@@ -1,0 +1,269 @@
+Date,Month,Year,Day of Week,Site,Time,Type of Incident,Officer Reporting,Hour
+1,February,2016,Monday,B,0:45,Eviction - Compliant,RK,0
+1,February,2016,Monday,T,0:42,Eviction - Compliant,MH,0
+1,February,2016,Monday,J,23:45,Theft,DH,23
+1,January,2016,Friday,T,1:55,Misc,AF,1
+1,January,2016,Friday,J,2:30,Prevention of Theft,AE,2
+1,July,2016,Friday,T,23:50,Vandalism / Property Damage,JL,23
+1,June,2016,Wednesday,J,22:43,Access Control,KR,22
+1,March,2016,Tuesday,T,22:19,Parking Lot Occurrence,JL,22
+1,May,2016,Sunday,J,0:33,Prevention of Theft,CS,0
+1,May,2016,Sunday,J,0:40,OH&S Hazard,CS,0
+2,April,2016,Saturday,CW,23:54,Theft,BP,23
+2,April,2016,Friday,B,0:41,Theft,RK,0
+2,February,2016,Tuesday,T,4:58,Eviction - Compliant,MH,4
+2,February,2016,Tuesday,J,23:20,Eviction - Compliant,AA,23
+2,January,2016,Saturday,J,1:04,Suspicious Person,AE,1
+2,January,2016,Saturday,J,2:00,OH&S Hazard,AE,2
+2,July,2016,Saturday,CD,2:40,Lost & Found / Abandonned Merch,RK,2
+2,June,2016,Thursday,T,0:31,Theft,JL,0
+2,June,2016,Thursday,CW,0:48,Eviction - Noncomp.,TF,0
+2,May,2016,Monday,T,5:50,OH&S Hazard,AF,5
+2,May,2016,Monday,CD,23:10,Infraction of Rules,RK,23
+3,April,2016,Sunday,CW,23:57,Theft,BP,23
+3,February,2016,Wednesday,J,0:14,Access Control,DH,0
+3,January,2016,Sunday,J,0:32,Maintenance Required,AE,0
+3,January,2016,Sunday,J,4:09,Vandalism / Property Damage,AE,4
+3,July,2016,Sunday,T,1:55,Suspicious Person,VV,1
+3,June,2016,Friday,CD,23:20,OH&S Hazard,DM,23
+3,March,2016,Sunday,CW,23:35,Parking Lot Occurrence,MH,23
+3,May,2016,Tuesday,T,0:31,Infraction of Rules,JL,0
+4,April,2016,Monday,CD,2:25,Suspicious Person,KR,2
+4,April,2016,Monday,T,1:41,Suspicious Person,MH,1
+4,April,2016,Monday,T,22:24,OH&S Hazard,MH,22
+4,April,2016,Monday,CD,23:15,OH&S Hazard,ES,23
+4,April,2016,Monday,T,23:45,Prevention of Theft,MH,23
+4,April,2016,Monday,CD,1:05,Prevention of Theft,ES,1
+4,February,2016,Thursday,J,22:00,Medical Emergency,LS,22
+4,February,2016,Thursday,CW,22:04,Access Control,MH,22
+4,January,2016,Monday,J,0:08,Parking Lot Occurrence,AE,0
+4,July,2016,Monday,CW,22:06,Infraction of Rules,TF,22
+4,July,2016,Monday,J,2:15,OH&S Hazard,KR,2
+4,March,2016,Friday,T,22:50,Theft,AF,22
+4,May,2016,Wednesday,CW,3:02,Suspicious Person,LM,3
+4,May,2016,Wednesday,CD,23:02,Theft,RD,23
+4,May,2016,Wednesday,T,23:11,Eviction - Compliant,JL,23
+4,May,2016,Wednesday,T,23:13,Infraction of Rules,JL,23
+5,April,2016,Tuesday,T,0:57,Infraction of Rules,JL,0
+5,February,2016,Friday,CW,2:27,Theft,CS,2
+5,January,2016,Tuesday,J,0:02,OH&S Hazard,AF,0
+5,January,2016,Tuesday,J,3:00,Medical Emergency,AF,3
+5,January,2016,Tuesday,J,2:15,Eviction - Compliant,AF,2
+5,January,2016,Tuesday,B,23:50,Access Control,TM,23
+5,January,2016,Tuesday,CD,4:20,Access Control,AM,4
+5,January,2016,Tuesday,J,3:45,Access Control,AF,3
+5,June,2016,Sunday,J,6:58,Suspicious Person,KR,6
+6,February,2016,Saturday,J,4:34,OH&S Hazard,AE,4
+6,February,2016,Saturday,J,5:09,Theft,AE,5
+6,January,2016,Wednesday,T,4:35,Theft,JL,4
+6,January,2016,Wednesday,B,4:45,OH&S Hazard,RD,4
+6,January,2016,Wednesday,T,2:50,Suspicious Person,JL,2
+6,January,2016,Sunday,J,6:20,Infraction of Rules,AF,6
+6,March,2016,Sunday,T,3:49,Medical Emergency,TM,3
+6,May,2016,Friday,T,2:35,Infraction of Rules,JL,2
+6,May,2016,Friday,T,22:40,OH&S Hazard,JL,22
+6,May,2016,Friday,CD,22:46,Lost & Found / Abandonned Merch,RK,22
+7,April,2016,Thursday,CW,23:58,Eviction - Compliant,MH,23
+7,February,2016,Sunday,J,23:40,Prevention of Theft,AE,23
+7,February,2016,Sunday,J,0:05,Eviction - Compliant,AE,0
+7,January,2016,Thursday,CW,0:43,Maintenance Required,MH,0
+7,January,2016,Monday,J,0:08,Misc,AF,0
+7,June,2016,Tuesday,CW,4:45,Access Control,TF,4
+7,March,2016,Monday,T,3:21,OH&S Hazard,MH,3
+7,March,2016,Monday,T,0:04,Access Control,MH,0
+7,May,2016,Saturday,CD,0:15,OH&S Hazard,RK,0
+8,April,2016,Friday,J,1:39,Lost & Found / Abandonned Merch,CS,1
+8,April,2016,Friday,T,1:44,Misc,JL,1
+8,February,2016,Monday,J,22:00,Theft,AA,22
+8,January,2016,Friday,T,2:35,OH&S Hazard,JL,2
+8,June,2016,Wednesday,CW,1:19,OH&S Hazard,TF,1
+8,June,2016,Wednesday,T,2:51,Maintenance Required,JL,2
+8,March,2016,Tuesday,T,23:02,Theft,MH,23
+9,February,2016,Tuesday,J,0:40,Suspicious Person,AA,0
+9,February,2016,Tuesday,T,3:53,Maintenance Required,CH,3
+9,January,2016,Wednesday,J,22:08,Access Control,AE,22
+9,January,2016,Wednesday,J,0:50,Suspicious Person,AE,0
+9,January,2016,Wednesday,J,3:45,Theft,AE,3
+9,January,2016,Saturday,B,3:40,Suspicious Person,DH,3
+9,June,2016,Thursday,J,4:50,Theft,AE,4
+9,March,2016,Wednesday,J,23:07,OH&S Hazard,DH,23
+10,January,2016,Thursday,J,0:47,Prevention of Theft,DH,0
+10,January,2016,Sunday,B,4:00,OH&S Hazard,IB,4
+10,March,2016,Thursday,J,2:16,Alarm,AM,2
+11,April,2016,Friday,CD,1:49,Suspicious Person,ES,1
+11,February,2016,Thursday,T,22:59,Access Control,JL,22
+11,February,2016,Thursday,T,23:04,Suspicious Person,JL,23
+11,January,2016,Friday,J,23:03,Maintenance Required,AF,23
+11,January,2016,Friday,J,23:38,Eviction - Compliant,AF,23
+11,March,2016,Friday,T,22:04,Infraction of Rules,JL,22
+11,March,2016,Friday,T,4:00,Eviction - Compliant,JL,4
+11,March,2016,Friday,T,4:32,Theft,JL,4
+11,March,2016,Friday,B,0:30,Infraction of Rules,RK,0
+11,May,2016,Wednesday,T,23:19,Access Control,JL,23
+11,May,2016,Wednesday,T,1:26,Access Control,JL,1
+11,May,2016,Saturday,CD,2:51,Access Control,RK,2
+12,April,2016,Tuesday,T,0:24,Suspicious Person,JL,0
+12,April,2016,Tuesday,T,2:30,OH&S Hazard,JL,2
+12,April,2016,Tuesday,T,22:54,Theft,JL,22
+12,February,2016,Friday,J,23:25,Suspicious Person,AM,23
+12,January,2016,Tuesday,T,23:34,Suspicious Person,MH,23
+12,January,2016,Tuesday,CW,4:34,Misc,PB,4
+12,January,2016,Tuesday,T,0:05,OH&S Hazard,MH,0
+12,May,2016,Thursday,B,5:00,Eviction - Compliant,ES,5
+13,April,2016,Wednesday,T,23:09,Infraction of Rules,JL,23
+13,February,2016,Saturday,J,23:03,Prevention of Theft,AE,23
+13,February,2016,Saturday,J,23:10,Misc,AE,23
+13,January,2016,Wednesday,T,2:42,Theft,MH,2
+13,January,2016,Wednesday,CW,5:18,Suspicious Person,MH,5
+13,January,2016,Wednesday,CW,6:25,Parking Lot Occurrence,MH,6
+13,March,2016,Sunday,J,4:15,Access Control,AE,4
+13,March,2016,Sunday,B,5:52,Theft,RK,5
+14,April,2016,Thursday,J,0:52,Graffiti,AM,0
+14,April,2016,Thursday,T,2:48,Infraction of Rules,JL,2
+14,February,2016,Sunday,J,1:59,Escort,MR,1
+14,February,2016,Sunday,CD,23:53,Eviction - Compliant,AM,23
+14,February,2016,Sunday,J,1:15,Suspicious Person,MR,1
+14,January,2016,Thursday,CW,2:16,Access Control,MH,2
+14,June,2016,Tuesday,T,1:13,OH&S Hazard,JL,1
+14,June,2016,Tuesday,T,5:08,Infraction of Rules,JL,5
+14,June,2016,Tuesday,T,1:37,Suspicious Person,JL,1
+14,June,2016,Tuesday,T,3:46,Suspicious Person,JL,3
+14,March,2016,Monday,CW,2:20,Suspicious Person,CS,2
+14,March,2016,Monday,J,23:00,Access Control,AM,23
+14,March,2016,Monday,CW,22:04,Infraction of Rules,CS,22
+14,March,2016,Monday,B,22:11,Theft,RK,22
+15,April,2016,Friday,J,3:32,Suspicious Person,CS,3
+15,May,2016,Sunday,B,2:02,Suspicious Person,DB,2
+15,May,2016,Monday,CW,23:25,Lost & Found / Abandonned Merch,BP,23
+16,April,2016,Saturday,J,2:06,Eviction - Compliant,CS,2
+16,February,2016,Tuesday,T,0:34,Prevention of Theft,JL,0
+16,January,2016,Saturday,J,2:30,Theft,AE,2
+16,January,2016,Saturday,B,1:13,OH&S Hazard,IB,1
+16,January,2016,Saturday,J,23:07,Access Control,AE,23
+16,January,2016,Saturday,J,23:09,Lost & Found / Abandonned Merch,AE,23
+16,January,2016,Saturday,J,3:30,Suspicious Person,AE,3
+16,March,2016,Wednesday,CW,23:52,Suspicious Person,MH,23
+16,March,2016,Wednesday,J,22:46,Theft,AM,22
+16,May,2016,Monday,T,4:20,Theft,AF,4
+17,April,2016,Sunday,J,6:02,Access Control,CS,6
+17,April,2016,Sunday,J,0:21,Graffiti,CS,0
+17,February,2016,Wednesday,T,2:25,Eviction - Compliant,JL,2
+17,February,2016,Wednesday,J,23:08,Prevention of Theft,MP,23
+17,February,2016,Wednesday,CD,23:08,Eviction - Compliant,KR,23
+17,January,2016,Sunday,J,2:45,Theft,AE,2
+17,January,2016,Sunday,J,3:49,Suspicious Person,AE,3
+17,January,2016,Sunday,J,2:03,Medical Emergency,AE,2
+17,March,2016,Thursday,CW,22:30,Misc,MH,22
+17,March,2016,Thursday,CW,3:18,Parking Lot Occurrence,MH,3
+17,March,2016,Thursday,T,21:52,Eviction - Compliant,JL,21
+17,May,2016,Tuesday,CW,2:11,Theft,BP,2
+17,May,2016,Tuesday,CW,23:39,Access Control,BP,23
+18,April,2016,Friday,CD,3:18,Access Control,ES,3
+18,January,2016,Monday,B,1:11,Maintenance Required,IB,1
+18,January,2016,Monday,T,4:42,Theft,MH,4
+18,January,2016,Monday,J,4:17,Misc,AF,4
+18,June,2016,Saturday,J,2:45,Lost & Found / Abandonned Merch,KR,2
+18,March,2016,Friday,T,1:25,Suspicious Person,AF,1
+18,March,2016,Friday,B,22:00,Maintenance Required,RK,22
+18,March,2016,Friday,B,0:38,Medical Emergency,RK,0
+18,May,2016,Wednesday,T,23:24,Parking Lot Occurrence,JL,23
+18,May,2016,Saturday,CD,2:10,Theft,RK,2
+19,April,2016,Tuesday,CW,1:00,Theft,BK,1
+19,April,2016,Tuesday,CW,3:30,OH&S Hazard,BK,3
+19,April,2016,Tuesday,T,0:22,Theft,JL,0
+19,April,2016,Tuesday,B,1:50,Eviction - Compliant,TM,1
+19,January,2016,Tuesday,T,23:09,Suspicious Person,MH,23
+19,May,2016,Sunday,CD,0:58,Misc,RK,0
+20,April,2016,Wednesday,J,3:06,Misc,CS,3
+20,April,2016,Wednesday,T,1:01,OH&S Hazard,JL,1
+20,April,2016,Wednesday,J,1:10,Suspicious Person,AM,1
+20,April,2016,Wednesday,T,1:24,Suspicious Person,JL,1
+20,February,2016,Saturday,J,5:48,Access Control,AE,5
+20,January,2016,Wednesday,J,3:55,Prevention of Theft,AF,3
+20,May,2016,Friday,T,1:38,OH&S Hazard,JL,1
+20,May,2016,Friday,T,22:07,Eviction - Compliant,JL,22
+21,April,2016,Thursday,J,5:58,Infraction of Rules,AM,5
+21,April,2016,Thursday,T,23:15,Suspicious Person,JL,23
+21,January,2016,Thursday,T,5:23,Theft,JL,5
+21,March,2016,Monday,B,23:18,Vandalism / Property Damage,RK,23
+21,March,2016,Monday,T,23:22,Infraction of Rules,MH,23
+21,March,2016,Monday,T,23:05,Theft,MH,23
+21,March,2016,Monday,J,0:27,OH&S Hazard,AM,0
+21,May,2016,Saturday,J,1:20,Theft,JB,1
+21,May,2016,Saturday,CW,5:55,Theft,BP,5
+22,February,2016,Monday,T,23:07,Medical Emergency,MH,23
+22,February,2016,Friday,B,4:12,Infraction of Rules,KB,4
+22,January,2016,Friday,CW,4:05,Maintenance Required,PB,4
+22,January,2016,Friday,CD,0:30,Access Control,MP,0
+22,January,2016,Friday,J,0:39,Infraction of Rules,MR,0
+22,June,2016,Wednesday,T,0:25,Theft,JL,0
+22,May,2016,Sunday,CW,23:20,Prevention of Theft,BP,23
+22,May,2016,Sunday,CW,23:41,OH&S Hazard,BP,23
+22,May,2016,Sunday,CW,0:09,OH&S Hazard,BP,0
+23,June,2016,Thursday,J,0:00,Lost & Found / Abandonned Merch,KR,0
+23,June,2016,Thursday,T,22:17,Access Control,JL,22
+23,March,2016,Wednesday,J,22:12,Access Control,AM,22
+23,May,2016,Monday,CW,0:09,Theft,BP,0
+24,April,2016,Sunday,B,2:15,Theft,RK,2
+24,February,2016,Wednesday,J,2:57,Access Control,DH,2
+24,February,2016,Wednesday,CD,23:45,Eviction - Compliant,AM,23
+24,February,2016,Wednesday,J,1:26,Eviction - Compliant,DH,1
+24,February,2016,Sunday,B,23:18,Suspicious Person,KB,23
+24,January,2016,Sunday,CD,5:29,Prevention of Theft,MP,5
+24,January,2016,Sunday,J,0:39,Infraction of Rules,JW,0
+24,June,2016,Friday,J,0:25,Infraction of Rules,MD,0
+24,March,2016,Thursday,J,21:59,Theft,AM,21
+24,March,2016,Thursday,J,0:13,Theft,AM,0
+24,March,2016,Thursday,J,0:55,Theft,AM,0
+24,March,2016,Thursday,T,1:45,Access Control,JL,1
+24,May,2016,Tuesday,J,23:53,Access Control,JB,23
+24,May,2016,Thursday,T,22:41,Theft,JL,22
+25,April,2016,Monday,B,1:11,Suspicious Person,RK,1
+25,April,2016,Monday,CD,3:22,OH&S Hazard,DM,3
+25,April,2016,Monday,CW,0:40,Eviction - Compliant,BP,0
+25,January,2016,Monday,CD,1:05,Lost & Found / Abandonned Merch,AM,1
+25,March,2016,Friday,J,1:20,Eviction - Compliant,AM,1
+25,May,2016,Wednesday,J,3:38,Access Control,ES,3
+25,May,2016,Wednesday,J,3:50,Access Control,ES,3
+25,May,2016,Friday,T,22:55,Infraction of Rules,JL,22
+26,April,2016,Tuesday,T,5:43,OH&S Hazard,JL,5
+26,April,2016,Tuesday,T,22:10,Access Control,JL,22
+26,February,2016,Friday,T,0:05,Suspicious Person,JL,0
+26,February,2016,Friday,J,22:00,Eviction - Noncomp.,AA,22
+26,January,2016,Tuesday,J,0:43,Access Control,AF,0
+26,June,2016,Sunday,CD,0:57,Medical Emergency,RK,0
+26,May,2016,Thursday,B,23:31,OH&S Hazard,KB,23
+26,May,2016,Thursday,CD,23:33,Suspicious Person,RK,23
+27,April,2016,Wednesday,T,23:38,Infraction of Rules,JL,1
+27,April,2016,Wednesday,T,0:47,Parking Lot Occurrence,JL,0
+27,April,2016,Wednesday,T,3:23,Eviction - Compliant,JL,3
+27,April,2016,Wednesday,CD,0:10,Maintenance Required,DM,0
+27,February,2016,Saturday,CW,3:53,Suspicious Person,CS,3
+27,February,2016,Saturday,T,2:15,Misc,TM,2
+27,February,2016,Saturday,CD,23:11,Misc,AM,23
+27,February,2016,Saturday,T,6:08,Eviction - Compliant,TM,6
+27,March,2016,Sunday,J,0:12,Theft,CS,0
+27,March,2016,Sunday,CD,3:20,Suspicious Person,TF,3
+29,February,2016,Monday,T,0:01,OH&S Hazard,MH,0
+29,January,2016,Friday,J,1:20,Eviction - Compliant,JL,1
+29,January,2016,Friday,J,23:55,Parking Lot Occurrence,JL,23
+29,January,2016,Friday,J,23:55,Infraction of Rules,AE,23
+29,June,2016,Wednesday,J,5:09,Parking Lot Occurrence,KR,5
+29,June,2016,Wednesday,J,23:12,Maintenance Required,KR,23
+29,March,2016,Tuesday,T,1:35,Theft,JL,1
+29,May,2016,Sunday,CW,0:37,Maintenance Required,LM,0
+30,April,2016,Saturday,CW,1:00,Prevention of Theft,BP,1
+30,April,2016,Saturday,CD,3:40,Eviction - Compliant,KR,3
+30,January,2016,Saturday,J,4:02,Eviction - Compliant,AE,4
+30,January,2016,Saturday,CD,23:22,OH&S Hazard,TH,23
+30,January,2016,Saturday,J,1:40,Theft,AE,1
+30,January,2016,Saturday,J,2:30,Prevention of Theft,AE,2
+31,January,2016,Sunday,J,4:14,OH&S Hazard,AE,4
+31,January,2016,Sunday,J,23:10,Suspicious Person,AE,23
+31,January,2016,Sunday,J,23:54,Prevention of Theft,AE,23
+31,March,2016,Thursday,CD,2:40,Infraction of Rules,KR,2
+31,March,2016,Thursday,T,22:01,Prevention of Theft,JL,22
+31,March,2016,Thursday,CD,1:09,Infraction of Rules,KR,1
+31,March,2016,Thursday,CD,2:35,Access Control,AM,2
+31,May,2016,Tuesday,B,1:40,Access Control,KB,1
+31,May,2016,Tuesday,T,23:06,Maintenance Required,JL,23
