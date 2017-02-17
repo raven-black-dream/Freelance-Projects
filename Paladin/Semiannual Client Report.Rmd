@@ -25,7 +25,7 @@ library(scales)
 library(knitr)
 
 setwd('C:/Users/Evan/PycharmProjects/Paladin_Analysis')
-data <- read.csv("Thrifty Foods_1_half_2016.csv")
+data <- read.csv("Client_1_half_2016.csv")
 
 data$inc_date <- paste(data$Date, data$Month, data$Year, sep= '/')
 
